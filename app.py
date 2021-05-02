@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for
 from flask_pymongo import PyMongo
-import scraping
+import scraping 
 
 app = Flask(__name__)
 
@@ -13,7 +13,7 @@ def index():
    mars = mongo.db.mars.find_one()
    return render_template("index.html", mars=mars)
 
-
+#set up our scraping route
 @app.route("/scrape")
 def scrape():
    mars = mongo.db.mars
@@ -21,5 +21,9 @@ def scrape():
    mars.update({}, mars_data, upsert=True)
    return redirect('/', code=302)
 
+#update the database 
+#mars.update(query_parameter, data, options)
+
+#The final bit of code we need for Flask is to tell it to run.
 if __name__ == "__main__":
-    app.run(debug=True)
+   app.run()
